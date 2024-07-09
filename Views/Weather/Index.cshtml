@@ -1,0 +1,46 @@
+﻿@model WeatherApp.Models.Weather
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero del Clima</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <h1>Tablero del tiempo</h1>
+            <form asp-action="GetWeather" method="post">
+                <input type="text" name="cityName" placeholder="Ingresa el nombre de la ciudad" required />
+                <button type="submit">Obtener Clima</button>
+            </form>
+            @if (Model != null)
+            {
+                <div id="weatherResult">
+                    <h2>Clima en @Model.City</h2>
+                    <p>Temperatura: @Model.Temperature°C</p>
+                    <p>Condición: @Model.Condition</p>
+                    <p>Humedad: @Model.Humidity%</p>
+                    <p>Velocidad del viento: @Model.WindSpeed kph</p>
+                </div>
+                <div id="forecastResult">
+                    <h2>Pronóstico de 3 días</h2>
+                    @foreach (var day in Model.Forecast)
+                    {
+                        <div>
+                            <p>Fecha: @day.Date</p>
+                            <p>Temperatura Máxima: @day.MaxTemp°C</p>
+                            <p>Temperatura Mínima: @day.MinTemp°C</p>
+                            <p>Condición: @day.Condition</p>
+                        </div>
+                    }
+                </div>
+            }
+            <div id="recentSearches"></div>
+        </div>
+    </div>
+</body>
+</html>
+
